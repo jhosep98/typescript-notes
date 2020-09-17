@@ -29,12 +29,21 @@ var eventListeners = function () {
         // Resetea el formulario
         formNote.reset();
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        notes = JSON.parse(localStorage.getItem("notes")) || [];
+        createTemplateHTML();
+    });
 };
 eventListeners();
 var createTemplateHTML = function () {
     cleanHTML();
     if (notes.length > 0) {
         notes.forEach(function (note) {
+            // delete button
+            var btnDelete = document.createElement("button");
+            btnDelete.textContent = "Delete";
+            btnDelete.onclick = function () { return deleteNote(note.id); };
+            // container html
             var containerNote = document.createElement("div");
             var titleNote = document.createElement("h2");
             var descriptionNote = document.createElement("p");
@@ -42,12 +51,21 @@ var createTemplateHTML = function () {
             descriptionNote.innerText = note.description;
             containerNote.appendChild(titleNote);
             containerNote.appendChild(descriptionNote);
+            containerNote.appendChild(btnDelete);
             containerNotes.appendChild(containerNote);
         });
     }
+    syncUpStorage();
 };
 var cleanHTML = function () {
     while (containerNotes.firstChild) {
         containerNotes.removeChild(containerNotes.firstChild);
     }
+};
+var syncUpStorage = function () {
+    return localStorage.setItem("notes", JSON.stringify(notes));
+};
+var deleteNote = function (id) {
+    notes = notes.filter(function (note) { return note.id !== id; });
+    createTemplateHTML();
 };

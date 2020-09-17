@@ -38,13 +38,25 @@ const eventListeners = () => {
     // Resetea el formulario
     formNote.reset();
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    notes = JSON.parse(localStorage.getItem("notes")) || [];
+    createTemplateHTML();
+  });
 };
+
 eventListeners();
 
 const createTemplateHTML = () => {
   cleanHTML();
   if (notes.length > 0) {
     notes.forEach((note) => {
+      // delete button
+      const btnDelete = document.createElement("button") as HTMLButtonElement;
+      btnDelete.textContent = "Delete";
+
+      btnDelete.onclick = () => deleteNote(note.id);
+      // container html
       const containerNote = document.createElement("div") as HTMLDivElement;
       const titleNote = document.createElement("h2") as HTMLHeadingElement;
       const descriptionNote = document.createElement(
@@ -56,13 +68,23 @@ const createTemplateHTML = () => {
 
       containerNote.appendChild(titleNote);
       containerNote.appendChild(descriptionNote);
+      containerNote.appendChild(btnDelete);
       containerNotes.appendChild(containerNote);
     });
   }
+  syncUpStorage();
 };
 
 const cleanHTML = () => {
   while (containerNotes.firstChild) {
     containerNotes.removeChild(containerNotes.firstChild);
   }
+};
+
+const syncUpStorage = () =>
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+const deleteNote = (id: number) => {
+  notes = notes.filter((note) => note.id !== id);
+  createTemplateHTML();
 };
