@@ -1,3 +1,4 @@
+"use strict";
 var __spreadArrays = (this && this.__spreadArrays) || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -20,7 +21,7 @@ var eventListeners = function () {
         var noteObject = {
             id: Date.now(),
             title: title,
-            description: description
+            description: description,
         };
         // Add notes to the new Array:
         notes = __spreadArrays(notes, [noteObject]);
@@ -31,6 +32,7 @@ var eventListeners = function () {
     });
     document.addEventListener("DOMContentLoaded", function () {
         notes = JSON.parse(localStorage.getItem("notes")) || [];
+        console.log(notes);
         createTemplateHTML();
     });
 };
@@ -42,11 +44,16 @@ var createTemplateHTML = function () {
             // delete button
             var btnDelete = document.createElement("button");
             btnDelete.textContent = "Delete";
+            btnDelete.classList.add("bg-red-500", "text-white", "font-bold", "py-2", "px-2", "rounded");
             btnDelete.onclick = function () { return deleteNote(note.id); };
             // container html
             var containerNote = document.createElement("div");
             var titleNote = document.createElement("h2");
             var descriptionNote = document.createElement("p");
+            // Add class css
+            containerNote.classList.add("bg-gray-200", "rounded-lg", "p-6", "m-6", "flex", "flex-col", "w-64", "h-64", "content-center", "justify-between");
+            titleNote.classList.add("text-lg", "uppercase", "block", "mt-1", "text-lg", "leading-tight", "font-semibold", "text-gray-900", "hover:underline");
+            descriptionNote.classList.add("text-gray-600", "my-3", "text-gray-600", "capitalize");
             titleNote.innerText = note.title;
             descriptionNote.innerText = note.description;
             containerNote.appendChild(titleNote);

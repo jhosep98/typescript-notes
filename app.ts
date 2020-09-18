@@ -41,6 +41,7 @@ const eventListeners = () => {
 
   document.addEventListener("DOMContentLoaded", () => {
     notes = JSON.parse(localStorage.getItem("notes")) || [];
+    console.log(notes);
     createTemplateHTML();
   });
 };
@@ -54,7 +55,14 @@ const createTemplateHTML = () => {
       // delete button
       const btnDelete = document.createElement("button") as HTMLButtonElement;
       btnDelete.textContent = "Delete";
-
+      btnDelete.classList.add(
+        "bg-red-500",
+        "text-white",
+        "font-bold",
+        "py-2",
+        "px-2",
+        "rounded"
+      );
       btnDelete.onclick = () => deleteNote(note.id);
       // container html
       const containerNote = document.createElement("div") as HTMLDivElement;
@@ -62,6 +70,38 @@ const createTemplateHTML = () => {
       const descriptionNote = document.createElement(
         "p"
       ) as HTMLParagraphElement;
+
+      // Add class css
+
+      containerNote.classList.add(
+        "bg-gray-200",
+        "rounded-lg",
+        "p-6",
+        "m-6",
+        "flex",
+        "flex-col",
+        "w-64",
+        "h-64",
+        "content-center",
+        "justify-between"
+      );
+      titleNote.classList.add(
+        "text-lg",
+        "uppercase",
+        "block",
+        "mt-1",
+        "text-lg",
+        "leading-tight",
+        "font-semibold",
+        "text-gray-900",
+        "hover:underline"
+      );
+      descriptionNote.classList.add(
+        "text-gray-600",
+        "my-3",
+        "text-gray-600",
+        "capitalize"
+      );
 
       titleNote.innerText = note.title;
       descriptionNote.innerText = note.description;
