@@ -1,6 +1,6 @@
 # Typescript_notes
 
-Notes application developed with typescript and tailwindcss.
+Notes application developed with typescript and tailwindcss. 📝🗒
 
 ## Table of contents
 
